@@ -1,8 +1,11 @@
 package com.rodrigosousa.bookstoremanager.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.rodrigosousa.bookstoremanager.dto.AuthorDTO;
 import com.rodrigosousa.bookstoremanager.dto.BookDTO;
 import com.rodrigosousa.bookstoremanager.dto.MessageResponseDTO;
 import com.rodrigosousa.bookstoremanager.entity.Author;
@@ -39,5 +42,24 @@ public class BookService {
 		return MessageResponseDTO.builder()
 				.message("Book Created with ID " + savedBook.getId())
 				.build();		
+	}
+	
+	public BookDTO findById(Long id) {
+		 Optional<Book> optionalBook = bookRepository.findById(id);
+		 AuthorDTO authorDTO = AuthorDTO.builder()
+				.id(optionalBook.get().getAuthor().getId())
+				.name(optionalBook.get().getAuthor().getName())
+				.age(optionalBook.get().getAuthor().getAge())
+				.build();
+		 BookDTO bookDTO = BookDTO.builder()
+				 .id(optionalBook.get().getId())
+				 .name(optionalBook.get().getName())
+				 .pages(optionalBook.get().getPages())
+				 .chapters(optionalBook.get().getChapters())
+				 .isbn(optionalBook.get().getIsbn())
+				 .publisherName(optionalBook.get().getPublisherName())
+				 .author(authorDTO)
+				 .build();
+		 return bookDTO; // bookMapper.toDTO(optionalBook.get())
 	}
 }
