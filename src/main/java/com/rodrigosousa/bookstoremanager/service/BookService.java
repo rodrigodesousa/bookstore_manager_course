@@ -10,6 +10,7 @@ import com.rodrigosousa.bookstoremanager.dto.BookDTO;
 import com.rodrigosousa.bookstoremanager.dto.MessageResponseDTO;
 import com.rodrigosousa.bookstoremanager.entity.Author;
 import com.rodrigosousa.bookstoremanager.entity.Book;
+import com.rodrigosousa.bookstoremanager.exception.BookNotFoundException;
 // import com.rodrigosousa.bookstoremanager.mapper.BookMapper;
 import com.rodrigosousa.bookstoremanager.repository.BookRepository;
 
@@ -44,22 +45,23 @@ public class BookService {
 				.build();		
 	}
 	
-	public BookDTO findById(Long id) {
-		 Optional<Book> optionalBook = bookRepository.findById(id);
+	public BookDTO findById(Long id) throws BookNotFoundException {
+		 Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+		 
 		 AuthorDTO authorDTO = AuthorDTO.builder()
-				.id(optionalBook.get().getAuthor().getId())
-				.name(optionalBook.get().getAuthor().getName())
-				.age(optionalBook.get().getAuthor().getAge())
+				.id(book.getAuthor().getId())
+				.name(book.getAuthor().getName())
+				.age(book.getAuthor().getAge())
 				.build();
 		 BookDTO bookDTO = BookDTO.builder()
-				 .id(optionalBook.get().getId())
-				 .name(optionalBook.get().getName())
-				 .pages(optionalBook.get().getPages())
-				 .chapters(optionalBook.get().getChapters())
-				 .isbn(optionalBook.get().getIsbn())
-				 .publisherName(optionalBook.get().getPublisherName())
+				 .id(book.getId())
+				 .name(book.getName())
+				 .pages(book.getPages())
+				 .chapters(book.getChapters())
+				 .isbn(book.getIsbn())
+				 .publisherName(book.getPublisherName())
 				 .author(authorDTO)
 				 .build();
-		 return bookDTO; // bookMapper.toDTO(optionalBook.get())
+		 return bookDTO; // bookMapper.toDTO(book)
 	}
 }
