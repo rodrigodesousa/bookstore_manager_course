@@ -1,7 +1,20 @@
 # book-store-manager-api
 ## Demo para testes
 ```
-https://book-store-manager-curso.herokuapp.com/
+https://book-store-manager-curso.herokuapp.com/api/v1/books
+POST: {
+    "name":"Investidor Inteligente",
+    "pages":200,
+    "chapters": 20,
+    "publisherName": "Harper Collins",
+    "isbn":"0-596-52068-9",
+    "author": {
+        "name": "Benjamin Graham",
+        "age": 100
+    }
+}
+
+GET: https://book-store-manager-curso.herokuapp.com/api/v1/books/{id}
 ```
 ## Requisitos:
 ```
