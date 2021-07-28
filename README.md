@@ -1,4 +1,8 @@
 # book-store-manager-api
+## Documentação Swagger
+```
+https://book-store-manager-curso.herokuapp.com/swagger-ui.html
+```
 ## Demo para testes
 ```
 https://book-store-manager-curso.herokuapp.com/api/v1/books
